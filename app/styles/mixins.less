@@ -1,0 +1,5 @@
+.fontsize(@font-size) {
+	@font-rem: unit(@font-size/@font-base, rem);
+	font-size: ~"@{font-size}px";
+	font-size: ~"@{font-rem}";
+}

@@ -21,7 +21,8 @@
   },
   "dependencies": {
     "express": "~4.2.0",
-    "morgan": "~1.0.0"
+    "morgan": "~1.0.0",
+    "normalize.less": "^1.0.0"
   },
   "devDependencies": {
     "gulp": "^3.9.0",

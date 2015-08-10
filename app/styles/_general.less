@@ -1,17 +1,31 @@
-body {
-	background: @gray-dark;
-	color: #fff;
+html {
+	font-size: @font-base;
 }
 
-h1 {
-	color: @gray;
+header {
+	background-color: @fuchsia;
+	left: 0;
+	right: 0;
+	top: 0;
+	position: fixed;
+	z-index: 10;
+}
+
+.logo {
+
+}
+
+.mask {
+	background: @transparency;
+	bottom: 0;
+	display: none;
+	left: 0;
 	position: absolute;
-	top: 50%;
-	left: 50%;
-	-webkit-transform: translate(-50%, -50%);
-	transform: translate(-50%, -50%);
-	margin: 0;
-	font: 20vmin/1 HUGEAvantGardeBold;
-	letter-spacing: -0.06em;
-	text-align: center;
+	right: 0;
+	top: 0;
+	z-index: 5;
+
+	&.active {
+		display: block;
+	}
 }

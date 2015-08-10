@@ -16,6 +16,7 @@
 				_this.drawNav(navData.items);
 			}
 		};
+
 		xhr.open('GET', url, true);
 		xhr.send(null);
 
@@ -39,6 +40,8 @@
 			return item;
 		}
 
+		menu.setAttribute('class', 'menu');
+
 		for (var i = 0; i < itemsLength; i++) {
 			var subMenu,
 				menuItem = menuItems[i],
@@ -48,6 +51,7 @@
 
 			if (subItemsLength) {
 				subMenu = document.createElement('ul');
+				subMenu.setAttribute('class', 'submenu');
 
 				for (var j = 0; j < subMenuItems.length; j++) {
 					var subMenuItem = subMenuItems[j],
@@ -74,17 +78,5 @@
 
 	window.huge = huge;
 	huge.init();
-
-
-
-	/*
-	//huge.utils.isMobile = isMobile;
-	huge.utils.isMobile = require('./utils/userAgent');
-
-	console.log('huge.utils.isMobile > ', huge.utils.isMobile);
-
-	huge.getNavigation = function() {
-		console.log('getNav!');
-	};*/
 
 })(window);
