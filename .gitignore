@@ -29,3 +29,8 @@ node_modules
 
 # Users Environment Variables
 .lock-wscript
+
+# NavExercise files
+./public/index.html
+./public/scripts
+./public/styles
