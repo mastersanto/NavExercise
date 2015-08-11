@@ -1,26 +1,16 @@
 .nav {
-	display: inline-block;
-	margin-left: @double-gutter;
+	display: inline-block;	
 }
 
 .menu {
 	list-style: none;
 	margin: 0;
+	padding: 0;
 
 	> li {
 		display: inline-block;
 		position: relative;
 		vertical-align: top;
-
-		&:hover {
-			> .menu-item {
-				background-color: @white;
-				color: @fuchsia;
-			}
-			> .submenu {
-				display: block;
-			}
-		}
 	}
 }
 
@@ -32,6 +22,18 @@
 	height: @height-nav;
 	padding: 0 @gutter;
 	text-decoration: none;
+
+	&:hover,
+	&.active {
+		background-color: @white;
+		color: @fuchsia;
+	}
+
+	&.active {
+		+ .submenu {
+			display: block;
+		}
+	}
 }
 
 .submenu {

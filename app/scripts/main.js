@@ -67,6 +67,51 @@
 		}
 
 		this.$nav.appendChild(menu);
+		this.bindEvents();
+	};
+
+	huge.bindEvents = function () {
+		var _this = this,
+			$hamburguer = document.getElementById('hamburguer'),
+			isTouch = function () {
+				return (('ontouchstart' in window) || (navigator.MaxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0));
+			};
+
+		this.$nav.addEventListener('click', this.toggleSubmenu, false);
+		$hamburguer.addEventListener('click', this.showNav, false);
+
+		/*if (isTouch()) {
+			concole.log('is touch!');
+			this.$nav.addEventListener('touchend', this.toggleSubmenu, false);
+			$hamburguer.addEventListener('touchend', this.showNav, false);
+
+		} else {
+			concole.log('not touch!');
+			this.$nav.addEventListener('click', this.toggleSubmenu, false);
+			$hamburguer.addEventListener('click', this.showNav, false);
+		}*/
+	};
+
+	huge.showNav = function (event) {
+		console.log('showNav > ', event);
+		event.preventDefault();
+	};
+
+	huge.toggleSubmenu = function (event) {
+		console.log('toggleSubmenu', event);
+		var $el = event.target,
+			_this = this,
+			$activeItem = huge.$nav.getElementsByClassName('active')[0];
+
+		if ($el.classList.contains('menu-item') && $el.nextSibling) {
+			if ($activeItem) {
+				$activeItem.classList.remove('active');
+			}
+
+			$el.classList.toggle('active');
+		}
+
+		event.preventDefault();
 	};
 
 	huge.init = function () {
