@@ -2,17 +2,119 @@ html {
 	font-size: @font-base;
 }
 
-header {
+body {
+	overflow-x: hidden;
+	width: 100%;
+}
+
+a:focus {
+	outline: 0 none;
+}
+
+p {
+	margin-top: 0;
+}
+
+.header {
 	background-color: @fuchsia;
-	left: 0;
+	position: fixed;
 	right: 0;
 	top: 0;
-	position: fixed;
+	width: 100%;
 	z-index: 10;
+
+	@media @small {
+		height: @height-nav-small;
+		position: relative;
+		width: 200%;
+	}
+}
+
+.header-inner {
+	position: relative;
+	transition: all ease 0.5s;
+
+	@media @small {
+		left: -50%;
+		margin-left: @triple-gutter;
+		width: 50%;
+
+		.active-nav & {
+			left: 0;
+			margin-left: 0;
+		}
+	}
 }
 
 .logo {
-	margin-left: @double-gutter;
+	.hide-text();
+	background-image: url('../images/HUGE-white.png');
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	background-size: contain;
+	float: left;
+	height: @gutter;
+	margin: @gutter @double-gutter 0 @gutter;
+	width: 60px;
+
+	@media @small {
+		margin-top: @gutter-small;
+	}
+}
+
+.hamburguer {
+	background-color: @white;
+	display: none;
+	float: right;
+	height: 20px;
+	margin-right: @gutter;
+	margin-top: 20px;
+	position: relative;
+	width: 20px;
+
+	@media @small {
+		display: block;
+	}
+
+	&:before,
+	&:after {
+		background-color: @fuchsia;
+		content: '';
+		display: block;
+		height: 4px;
+		left: 0;
+		position: absolute;
+		width: 100%;
+	}
+
+	&:before {
+		top: 4px;
+	}
+
+	&:after {
+		bottom: 4px;
+	}
+
+	&.active {
+		background-color: @fuchsia;
+
+		&:before,
+		&:after {
+			background-color: @white;
+			bottom: 0;
+			left: auto;
+			right: 0;
+			top: 7px;
+		}
+
+		&:before {
+			transform: rotate(-45deg);
+		}
+
+		&::after {
+			transform: rotate(45deg);
+		}
+	}
 }
 
 .mask {
@@ -20,12 +122,52 @@ header {
 	bottom: 0;
 	display: none;
 	left: 0;
-	position: absolute;
+	position: fixed;
 	right: 0;
 	top: 0;
 	z-index: 5;
 
 	&.active {
 		display: block;
+	}
+}
+
+.footer {
+	background-color: @white;
+	left: 0;
+	position: absolute;
+	right: 0;
+	transition: right ease 0.5s;
+
+	@media @small {
+		background-color: white;
+		bottom: 0;
+		left: auto;
+		position: fixed;
+		right: 100%;
+		top: 0;
+		width: 100%;
+		z-index: 9;
+
+		&.active-nav {
+			right: 72px;
+		}
+	}
+}
+
+.copyright {
+	.center-content ();
+	margin-bottom: @gutter;
+
+	@media @medium {
+		padding-left: @gutter;
+	}
+
+	@media @small {
+		//background-color: @white;
+		bottom: 0;
+		line-height: gutter;
+		padding-left: 96px;
+		position: absolute;
 	}
 }

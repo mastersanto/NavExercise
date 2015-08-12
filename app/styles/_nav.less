@@ -1,5 +1,20 @@
 .nav {
-	display: inline-block;	
+	display: inline-block;
+
+	@media @small {
+		background-color: #fff;
+		display: block;
+		height: 100vh;
+		left: 0;
+		margin-top: 60px;
+		position: absolute;
+		right: @triple-gutter;
+		top: 0;
+
+		.active-nav & {
+			height: auto;
+		}
+	}
 }
 
 .menu {
@@ -11,6 +26,10 @@
 		display: inline-block;
 		position: relative;
 		vertical-align: top;
+
+		@media @small {
+			display: block;
+		}
 	}
 }
 
@@ -23,6 +42,49 @@
 	padding: 0 @gutter;
 	text-decoration: none;
 
+	@media @header-fix {
+		.fontsize(15);
+	}
+
+	@media @small {
+		color: @black;
+		position: relative;
+
+		&.has-submenu {
+			&:after,
+			&:before {
+				background-color: @fuchsia;
+				content: '';
+				display: inline-block;
+				height: 3px;
+				position: absolute;
+				top: 35px;
+				width: 15px;
+			}
+
+			&:before {
+				background-image: url('../images/toggle-close.svg');
+				right: 30px;
+				transform: rotate(45deg);
+
+				.active& {
+					right: 21px;
+				}
+			}
+
+			&:after {
+				background-image: url('../images/toggle-open.svg');
+				right: 21px;
+				transform: rotate(-45deg);
+
+				.active& {
+					right: 30px;
+				}
+			}
+		}
+
+	}
+
 	&:hover,
 	&.active {
 		background-color: @white;
@@ -34,6 +96,13 @@
 			display: block;
 		}
 	}
+
+
+
+	@media @small {
+		color: @black;
+		position: relative;
+	}
 }
 
 .submenu {
@@ -44,6 +113,10 @@
 	padding: 0;
 	position: absolute;
 	top: 100%;
+
+	@media @small {
+		position: relative;
+	}
 }
 
 .submenu-item {
@@ -56,7 +129,7 @@
 	white-space: nowrap;
 
 	&:hover {
-		background-color: @light;
+		background-color: @grey-light;
 		color: @fuchsia;
 	}
 }

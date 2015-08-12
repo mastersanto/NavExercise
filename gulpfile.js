@@ -6,9 +6,11 @@ var gulp   = require('gulp'),
 	concat = require('gulp-concat'),
 	rename = require('gulp-rename'),
 	uglify = require('gulp-uglify'),
+	// check what is this about
 	plumber = require('gulp-plumber'),
-	minifyCSS = require('gulp-minify-css'),
 	less = require('gulp-less'),
+	cmq = require('gulp-combine-media-queries');
+	minifyCSS = require('gulp-minify-css'),
 	watchLess = require('gulp-watch-less'),
 	htmlreplace = require('gulp-html-replace'),
 	minifyHTML = require('gulp-minify-html'),
@@ -16,12 +18,14 @@ var gulp   = require('gulp'),
 	path = require('path');
 
 
+var cmq = require('gulp-combine-media-queries');
+
 // configure javascript tasks
 gulp.task('javascript', function() {
 	gulp.src('./app/scripts/main.js')
 		//.pipe(order([]))
-		.pipe(concat('app.js'))
-		.pipe(gulp.dest('./public/scripts'))
+		//.pipe(concat('app.js'))
+		//.pipe(gulp.dest('./public/scripts'))
 		.pipe(jshint())
 		.pipe(jshint.reporter('default'))
 		.pipe(rename('app.min.js'))
@@ -44,6 +48,9 @@ gulp.task('less', function() {
 		.pipe(plumber())
 		.pipe (debug ())
 		.pipe(less())
+		.pipe(cmq({
+			log: true
+		}))
 		//.pipe(minifyCSS())
 		.pipe(gulp.dest('./public/styles'))
 		.pipe(livereload());

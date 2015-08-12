@@ -4,6 +4,13 @@
 	// Spacename declaration
 	var huge = huge || {};
 
+	huge.getSupportedEvent = function () {
+		var isTouch = ('ontouchstart' in window) || (navigator.MaxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0),
+			supportedEvent = isTouch ? 'touchend' : 'click';
+
+		return supportedEvent;
+	};
+
 	huge.getNavData = function () {
 		var navData,
 			_this = this,
@@ -19,13 +26,10 @@
 
 		xhr.open('GET', url, true);
 		xhr.send(null);
-
-		return;
 	};
 
 	huge.drawNav = function(menuItems) {
-		var _this = this,
-			itemsLength = menuItems.length,
+		var itemsLength = menuItems.length,
 			menu = document.createElement('ul');
 
 		function createMenuItem(classEl, url, label) {
@@ -44,10 +48,12 @@
 
 		for (var i = 0; i < itemsLength; i++) {
 			var subMenu,
+				item,
 				menuItem = menuItems[i],
-				item = createMenuItem('menu-item', menuItem.url, menuItem.label),
 				subMenuItems = menuItems[i].items,
-				subItemsLength = subMenuItems.length;
+				subItemsLength = subMenuItems.length,
+				itemClass = subItemsLength ? 'menu-item has-submenu' : 'menu-item',
+				item = createMenuItem(itemClass, menuItem.url, menuItem.label);
 
 			if (subItemsLength) {
 				subMenu = document.createElement('ul');
@@ -71,54 +77,87 @@
 	};
 
 	huge.bindEvents = function () {
-		var _this = this,
-			$hamburguer = document.getElementById('hamburguer'),
-			isTouch = function () {
-				return (('ontouchstart' in window) || (navigator.MaxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0));
-			};
+		var _this = this;
 
-		this.$nav.addEventListener('click', this.toggleSubmenu, false);
-		$hamburguer.addEventListener('click', this.showNav, false);
+		this.$header.addEventListener(this.supportedEvent, function (event) {
+			var $el = event.target,
+				elClass = $el.classList;
 
-		/*if (isTouch()) {
-			concole.log('is touch!');
-			this.$nav.addEventListener('touchend', this.toggleSubmenu, false);
-			$hamburguer.addEventListener('touchend', this.showNav, false);
+			// Handle event on click menu item
+			if (elClass.contains('has-submenu')) {
+				_this.toggleSubmenu($el);
 
-		} else {
-			concole.log('not touch!');
-			this.$nav.addEventListener('click', this.toggleSubmenu, false);
-			$hamburguer.addEventListener('click', this.showNav, false);
-		}*/
-	};
+			} else {
+				// Handle event on click hamburguer icon
+				if (elClass.contains('hamburguer')) {
+					_this.toogleNavigation();
 
-	huge.showNav = function (event) {
-		console.log('showNav > ', event);
-		event.preventDefault();
-	};
+				// Remove mask on click insise header outside nav for breakpoint >= 768px
+				} else if(!_this.$hamburguer.classList.contains('active')) {
+					console.log('HAMBURGUER IS ACTIVE');
+					_this.$mask.classList.remove('active');
+				}
 
-	huge.toggleSubmenu = function (event) {
-		console.log('toggleSubmenu', event);
-		var $el = event.target,
-			_this = this,
-			$activeItem = huge.$nav.getElementsByClassName('active')[0];
-
-		if ($el.classList.contains('menu-item') && $el.nextSibling) {
-			if ($activeItem) {
-				$activeItem.classList.remove('active');
+				_this.hideActiveSubmenu();
 			}
 
-			$el.classList.toggle('active');
-		}
+			event.preventDefault();
+		}, false);
 
-		event.preventDefault();
+		this.$mask.addEventListener(this.supportedEvent, function (event) {
+			_this.hideActiveSubmenu();
+			_this.toogleNavigation();
+			event.preventDefault();
+		}, false);
 	};
 
+	huge.toogleNavigation = function () {
+		console.log('toogleNavigation');
+		huge.$hamburguer.classList.toggle('active');
+		huge.$mask.classList.toggle('active');
+		huge.$header.classList.toggle('active-nav');
+		huge.$footer.classList.toggle('active-nav');
+	};
+
+	huge.hideActiveSubmenu = function () {
+		console.log('hideActiveSubmenu');
+		var $activeItem = huge.$nav.getElementsByClassName('active')[0];
+
+		if ($activeItem) {
+			$activeItem.classList.remove('active');
+		}
+	};
+
+	huge.toggleSubmenu = function ($el) {
+		console.log('toggleSubmenu', event);
+		var _this = this,
+			maskClass = huge.$mask.classList;
+
+		huge.hideActiveSubmenu();
+		$el.classList.toggle('active');
+
+		if ($el.classList.contains('active')) {
+			maskClass.add('active');
+
+		} else {
+			maskClass.remove('active');
+		}
+	};
+
+	/**
+	 * [init description]
+	 * @return {[type]} [description]
+	 */
 	huge.init = function () {
-		//var self = this;
+		this.$header = document.getElementById('header');
 		this.$nav = document.getElementById('nav');
+		this.$hamburguer = document.getElementById('hamburguer');
+		this.$footer = document.getElementById('footer');
+		this.$mask = document.getElementById('mask');
+		this.supportedEvent = this.getSupportedEvent();
+		console.log('this.supportedEvent', this.supportedEvent);
+		console.log('typeof', typeof this.supportedEvent);
 		this.getNavData();
-		return;
 	};
 
 	window.huge = huge;
