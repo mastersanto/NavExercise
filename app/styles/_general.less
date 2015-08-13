@@ -17,6 +17,8 @@ p {
 
 .header {
 	background-color: @fuchsia;
+	display: block;
+	height: @nav-height;
 	position: fixed;
 	right: 0;
 	top: 0;
@@ -24,7 +26,7 @@ p {
 	z-index: 10;
 
 	@media @small {
-		height: @height-nav-small;
+		height: @nav-height-small;
 		position: relative;
 		width: 200%;
 	}
@@ -36,7 +38,7 @@ p {
 
 	@media @small {
 		left: -50%;
-		margin-left: @triple-gutter;
+		margin-left: @nav-height;
 		width: 50%;
 
 		.active-nav & {
@@ -157,17 +159,25 @@ p {
 
 .copyright {
 	.center-content ();
+	font-family: 'Helvetica';
 	margin-bottom: @gutter;
+
+	> small {
+		.fontsize(16);
+	}
 
 	@media @medium {
 		padding-left: @gutter;
 	}
 
 	@media @small {
-		//background-color: @white;
 		bottom: 0;
 		line-height: gutter;
 		padding-left: 96px;
 		position: absolute;
+
+		> small {
+			.fontsize(12);
+		}
 	}
 }

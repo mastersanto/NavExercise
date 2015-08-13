@@ -3,11 +3,14 @@
 	height: 80vh;
 	min-height: 640px;
 	left: 0;
-	margin: 0 0 60px;
+	margin: 0;
 	overflow: hidden;
 	position: relative;
-	//top: @height-nav;
 	width: 100%;
+
+	@media @small {
+		margin-bottom: 50px;
+	}
 }
 
 .hero-image-wrapper {
@@ -17,7 +20,7 @@
 	min-height: 640px;
 	position: fixed;
 	text-align: center;
-	top: @height-nav-small;
+	top: @nav-height-small;
 	width: 200%;
 
 	@media @small {
@@ -34,10 +37,10 @@
 .title {
 	.fontsize(120);
 	color: @white;
-	font-family: HUGEAvantGardeBold;
+	font-family: 'HUGEAvantGardeBold';
 	margin: 0;
 	left: @gutter;
-	letter-spacing: -0.06em;
+	letter-spacing: -3px;
 	padding: 0 @gutter;
 	position: absolute;
 	right: @gutter;
@@ -46,9 +49,12 @@
 	white-space: nowrap;
 
 	@media @small {
+		.fontsize(44);
 		color: black;
+		margin-bottom: 50px;
 		left: auto;
 		position: static;
+		right: auto;
 		text-align: left;
 		top: auto;
 	}
@@ -56,8 +62,12 @@
 
 .content-wrapper {
 	background-color: white;
-	padding: 60px @gutter;
+	padding: @nav-height-small @gutter;
 	position: relative;
+
+	@media @small {
+		padding: 0 @gutter-small 50px;
+	}
 }
 
 .content {
@@ -66,6 +76,7 @@
 	p {
 		.fontsize(24);
 		color: @black;
+		font-family: 'Galaxie';
 
 		&:last-child {
 			margin-bottom: 0;

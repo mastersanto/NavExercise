@@ -1,17 +1,16 @@
-// Global values
-// --------------------------------------------------
-
+// Breakpoints
+// ---------------------------------------------
 @break-medium: 1015;
-@break-header-fix: 903;
 @break-mobile-plus: 768;
 @break-mobile: 767;
 
-//>= 768px: Desktop
-
+// Media Queries
+// ---------------------------------------------
 @medium: ~"only screen and (min-width: @{break-mobile-plus}px) and (max-width: @{break-medium}px)";
-@header-fix: ~"only screen and (min-width: @{break-mobile-plus}px) and (max-width: @{break-header-fix}px)";
 @small: ~"only screen and (max-width: @{break-mobile}px)";
 
+// Colors
+// ---------------------------------------------
 @fuchsia: #ec008c;
 @white: #fff;
 @black: #000;
@@ -19,30 +18,16 @@
 @transparency: rgba(0, 0, 0, 0.5);
 
 // Fonts
+// ---------------------------------------------
 @font-base: 16px;
 
 // Measures
+// ---------------------------------------------
 @gutter: 24px;
 @gutter-small: 20px;
 
 @half-gutter: unit(@gutter / 2, px);
 @double-gutter: unit(@gutter * 2, px);
-@triple-gutter: unit(@gutter * 3, px);
 
-@height-nav: unit(@gutter * 3, px);
-@height-nav-small: unit(@gutter-small * 3, px);
-
-.hide-text () {
-	text-indent: 100%;
-	white-space: nowrap;
-	overflow: hidden;
-}
-
-.center-content () {
-	margin: 0 auto;
-	width: 968px;
-
-	@media @medium {
-		width: auto;
-	}
-}
+@nav-height: unit(@gutter * 3, px);
+@nav-height-small: unit(@gutter-small * 3, px);

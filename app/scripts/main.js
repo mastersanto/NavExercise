@@ -48,7 +48,6 @@
 
 		for (var i = 0; i < itemsLength; i++) {
 			var subMenu,
-				item,
 				menuItem = menuItems[i],
 				subMenuItems = menuItems[i].items,
 				subItemsLength = subMenuItems.length,
@@ -133,7 +132,21 @@
 		var _this = this,
 			maskClass = huge.$mask.classList;
 
-		huge.hideActiveSubmenu();
+		if ($el.classList.contains('active')) {
+			maskClass.remove('active');
+			$el.classList.remove('active');
+			huge.hideActiveSubmenu();
+			huge.toogleNavigation();
+
+		} else {
+			maskClass.add('active');
+			$el.classList.add('active');
+			huge.toogleNavigation();
+			huge.hideActiveSubmenu();
+		}
+
+		/*huge.hideActiveSubmenu();
+
 		$el.classList.toggle('active');
 
 		if ($el.classList.contains('active')) {
@@ -141,7 +154,7 @@
 
 		} else {
 			maskClass.remove('active');
-		}
+		}*/
 	};
 
 	/**

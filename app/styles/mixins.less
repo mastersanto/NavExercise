@@ -1,5 +1,24 @@
+.center-content () {
+	margin: 0 auto;
+	width: 968px;
+
+	@media @medium {
+		width: auto;
+	}
+
+	@media @small {
+		width: auto;
+	}
+}
+
 .fontsize(@font-size) {
 	@font-rem: unit(@font-size/@font-base, rem);
 	font-size: ~"@{font-size}px";
 	font-size: ~"@{font-rem}";
+}
+
+.hide-text () {
+	text-indent: 100%;
+	white-space: nowrap;
+	overflow: hidden;
 }

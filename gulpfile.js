@@ -1,6 +1,5 @@
 // packages
 var gulp   = require('gulp'),
-	debug = require ('gulp-debug'),
 	jshint = require('gulp-jshint'),
 	order = require('gulp-order'),
 	concat = require('gulp-concat'),
@@ -16,7 +15,6 @@ var gulp   = require('gulp'),
 	minifyHTML = require('gulp-minify-html'),
 	livereload = require('gulp-livereload'),
 	path = require('path');
-
 
 var cmq = require('gulp-combine-media-queries');
 
@@ -45,8 +43,6 @@ gulp.task('jshint', function() {
 // configure less task
 gulp.task('less', function() {
 	gulp.src('./app/styles/main.less')
-		.pipe(plumber())
-		.pipe (debug ())
 		.pipe(less())
 		.pipe(cmq({
 			log: true

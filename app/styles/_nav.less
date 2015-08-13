@@ -8,7 +8,7 @@
 		left: 0;
 		margin-top: 60px;
 		position: absolute;
-		right: @triple-gutter;
+		right: @nav-height;
 		top: 0;
 
 		.active-nav & {
@@ -30,6 +30,10 @@
 		@media @small {
 			display: block;
 		}
+
+		> .submenu {
+			padding: @half-gutter 0;
+		}
 	}
 }
 
@@ -37,17 +41,32 @@
 	.fontsize(21);
 	color: @white;
 	display: block;
-	line-height: @height-nav;
-	height: @height-nav;
+	font-family: 'HUGEAvantGardeBold';
+	line-height: @nav-height;
+	height: @nav-height;
 	padding: 0 @gutter;
 	text-decoration: none;
 
-	@media @header-fix {
+	&:hover,
+	&.active {
+		background-color: @white;
+		color: @fuchsia;
+	}
+
+	&.active {
+		+ .submenu {
+			display: block;
+		}
+	}
+
+	@media @medium {
 		.fontsize(15);
+		padding: 0 18px;
 	}
 
 	@media @small {
 		color: @black;
+		padding: 0 @gutter;
 		position: relative;
 
 		&.has-submenu {
@@ -84,30 +103,12 @@
 		}
 
 	}
-
-	&:hover,
-	&.active {
-		background-color: @white;
-		color: @fuchsia;
-	}
-
-	&.active {
-		+ .submenu {
-			display: block;
-		}
-	}
-
-
-
-	@media @small {
-		color: @black;
-		position: relative;
-	}
 }
 
 .submenu {
 	background-color: @white;
 	display: none;
+	font-family: 'HUGEAvantGardeBold';
 	left: 0;
 	list-style: none;
 	padding: 0;
@@ -120,8 +121,10 @@
 }
 
 .submenu-item {
+	.fontsize(16);
 	color: @black;
 	display: block;
+	font-family: 'Galaxie';
 	height: @double-gutter;
 	line-height: @double-gutter;
 	padding: 0 @gutter;
@@ -131,5 +134,9 @@
 	&:hover {
 		background-color: @grey-light;
 		color: @fuchsia;
+	}
+
+	@media @small {
+		font-family: 'HUGEAvantGardeBold';
 	}
 }
