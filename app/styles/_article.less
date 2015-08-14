@@ -20,7 +20,7 @@
 	min-height: 640px;
 	position: fixed;
 	text-align: center;
-	top: @nav-height-small;
+	top: @nav-height;
 	width: 200%;
 
 	@media @small {
@@ -44,9 +44,13 @@
 	padding: 0 @gutter;
 	position: absolute;
 	right: @gutter;
-	top: 34%;
+	top: 31%;
 	text-align: center;
 	white-space: nowrap;
+
+	@media @medium {
+		.fontsize(110);
+	}
 
 	@media @small {
 		.fontsize(44);
@@ -83,4 +87,3 @@
 		}
 	}
 }
-

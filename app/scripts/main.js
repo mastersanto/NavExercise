@@ -4,6 +4,10 @@
 	// Spacename declaration
 	var huge = huge || {};
 
+	huge.isSmallWindow =  function () {
+		return document.documentElement.clientWidth < 768;
+	};
+
 	huge.getSupportedEvent = function () {
 		var isTouch = ('ontouchstart' in window) || (navigator.MaxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0),
 			supportedEvent = isTouch ? 'touchend' : 'click';
@@ -79,24 +83,22 @@
 		var _this = this;
 
 		this.$header.addEventListener(this.supportedEvent, function (event) {
-			var $el = event.target,
+			var action,
+				$el = event.target,
 				elClass = $el.classList;
 
 			// Handle event on click menu item
 			if (elClass.contains('has-submenu')) {
 				_this.toggleSubmenu($el);
 
+			// Handle event on click hamburguer icon
+			} else if (elClass.contains('hamburguer')) {
+				action = elClass.contains('active') ? 'remove' : 'add';
+				_this.toogleNavigation(action);
+
+			// Handle event on click mask
 			} else {
-				// Handle event on click hamburguer icon
-				if (elClass.contains('hamburguer')) {
-					_this.toogleNavigation();
-
-				// Remove mask on click insise header outside nav for breakpoint >= 768px
-				} else if(!_this.$hamburguer.classList.contains('active')) {
-					console.log('HAMBURGUER IS ACTIVE');
-					_this.$mask.classList.remove('active');
-				}
-
+				huge.toogleNavigation('remove');
 				_this.hideActiveSubmenu();
 			}
 
@@ -105,21 +107,19 @@
 
 		this.$mask.addEventListener(this.supportedEvent, function (event) {
 			_this.hideActiveSubmenu();
-			_this.toogleNavigation();
+			_this.toogleNavigation('remove');
 			event.preventDefault();
 		}, false);
 	};
 
-	huge.toogleNavigation = function () {
-		console.log('toogleNavigation');
-		huge.$hamburguer.classList.toggle('active');
-		huge.$mask.classList.toggle('active');
-		huge.$header.classList.toggle('active-nav');
-		huge.$footer.classList.toggle('active-nav');
+	huge.toogleNavigation = function (action) {
+		huge.$hamburguer.classList[action]('active');
+		huge.$mask.classList[action]('active');
+		huge.$header.classList[action]('active');
+		huge.$footer.classList[action]('active');
 	};
 
 	huge.hideActiveSubmenu = function () {
-		console.log('hideActiveSubmenu');
 		var $activeItem = huge.$nav.getElementsByClassName('active')[0];
 
 		if ($activeItem) {
@@ -128,33 +128,22 @@
 	};
 
 	huge.toggleSubmenu = function ($el) {
-		console.log('toggleSubmenu', event);
 		var _this = this,
 			maskClass = huge.$mask.classList;
 
 		if ($el.classList.contains('active')) {
-			maskClass.remove('active');
+			// remove navigation just for desktop
+			if(!huge.isSmallWindow()) {
+				huge.toogleNavigation('remove');
+			}
+
 			$el.classList.remove('active');
-			huge.hideActiveSubmenu();
-			huge.toogleNavigation();
 
 		} else {
-			maskClass.add('active');
+			huge.hideActiveSubmenu();
+			huge.toogleNavigation('add');
 			$el.classList.add('active');
-			huge.toogleNavigation();
-			huge.hideActiveSubmenu();
 		}
-
-		/*huge.hideActiveSubmenu();
-
-		$el.classList.toggle('active');
-
-		if ($el.classList.contains('active')) {
-			maskClass.add('active');
-
-		} else {
-			maskClass.remove('active');
-		}*/
 	};
 
 	/**
@@ -168,8 +157,6 @@
 		this.$footer = document.getElementById('footer');
 		this.$mask = document.getElementById('mask');
 		this.supportedEvent = this.getSupportedEvent();
-		console.log('this.supportedEvent', this.supportedEvent);
-		console.log('typeof', typeof this.supportedEvent);
 		this.getNavData();
 	};
 

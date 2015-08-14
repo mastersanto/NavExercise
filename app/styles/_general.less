@@ -41,7 +41,7 @@ p {
 		margin-left: @nav-height;
 		width: 50%;
 
-		.active-nav & {
+		.active & {
 			left: 0;
 			margin-left: 0;
 		}
@@ -50,14 +50,18 @@ p {
 
 .logo {
 	.hide-text();
-	background-image: url('../images/HUGE-white.png');
-	background-position: 50% 50%;
+	background-image: url('../images/HUGE.png');
+	background-position: 0 100%;
 	background-repeat: no-repeat;
-	background-size: contain;
+	background-size: 100%;
 	float: left;
 	height: @gutter;
 	margin: @gutter @double-gutter 0 @gutter;
 	width: 60px;
+
+	&:hover {
+		background-position: 0 50%;
+	}
 
 	@media @small {
 		margin-top: @gutter-small;
@@ -73,10 +77,6 @@ p {
 	margin-top: 20px;
 	position: relative;
 	width: 20px;
-
-	@media @small {
-		display: block;
-	}
 
 	&:before,
 	&:after {
@@ -117,6 +117,10 @@ p {
 			transform: rotate(45deg);
 		}
 	}
+
+	@media @small {
+		display: block;
+	}
 }
 
 .mask {
@@ -151,7 +155,7 @@ p {
 		width: 100%;
 		z-index: 9;
 
-		&.active-nav {
+		&.active {
 			right: 72px;
 		}
 	}
