@@ -4,6 +4,16 @@ describe('huge', function () {
 
 	describe('Append menu to navigation', function() {
 
+		it('should get window with is small or not', function() {
+			document.documentElement.clientWidth = 768;
+			expect(huge.isSmallWindow()).toBe(true);
+		});
+
+		it('should get is mobile or not', function() {
+			window.ontouchstart = true;
+			expect(huge.getSupportedEvent()).toBe('touchend');
+		});
+
 		it('should get menu data', function() {
 			expect(huge.getNavData).toBeDefined();
 		});
