@@ -1,43 +1,34 @@
 // packages
-var gulp   = require('gulp'),
+var gulp = require('gulp'),
+	cmq = require('gulp-combine-media-queries');
+	htmlReplace = require('gulp-html-replace'),
 	jshint = require('gulp-jshint'),
-	order = require('gulp-order'),
-	concat = require('gulp-concat'),
+	less = require('gulp-less'),
+	minifyCSS = require('gulp-minify-css'),
+	minifyHTML = require('gulp-minify-html'),
 	rename = require('gulp-rename'),
 	uglify = require('gulp-uglify'),
-	// check what is this about
-	plumber = require('gulp-plumber'),
-	less = require('gulp-less'),
-	cmq = require('gulp-combine-media-queries');
-	minifyCSS = require('gulp-minify-css'),
 	watchLess = require('gulp-watch-less'),
-	htmlreplace = require('gulp-html-replace'),
-	minifyHTML = require('gulp-minify-html'),
-	livereload = require('gulp-livereload'),
-	path = require('path');
-
-var cmq = require('gulp-combine-media-queries');
+	karmaServer = require('karma').Server;
 
 // configure javascript tasks
 gulp.task('javascript', function() {
 	gulp.src('./app/scripts/main.js')
-		//.pipe(order([]))
-		//.pipe(concat('app.js'))
-		//.pipe(gulp.dest('./public/scripts'))
 		.pipe(jshint())
 		.pipe(jshint.reporter('default'))
+		.pipe(uglify())
 		.pipe(rename('app.min.js'))
-		//.pipe(uglify())
 		.pipe(gulp.dest('./public/scripts'));
 });
 
-// configure jshint task
-gulp.task('jshint', function() {
-	// return gulp.src(['./app/main.js', './api/index.js', './app/scripts/*.js'])
-	gulp.src('./app/scripts/main.js')
-		.pipe(jshint())
-		.pipe(jshint.reporter('default'));
-		// .pipe(jshint.reporter('jshint-stylish'));
+// run tests and exit
+gulp.task('test', function(done) {
+    karmaServer.start({
+        configFile: __dirname + '/test/karma.conf.js',
+        singleRun: true
+    }, function() {
+        done();
+    });
 });
 
 // configure less task
@@ -47,44 +38,36 @@ gulp.task('less', function() {
 		.pipe(cmq({
 			log: true
 		}))
-		//.pipe(minifyCSS())
-		.pipe(gulp.dest('./public/styles'))
-		.pipe(livereload());
+		.pipe(minifyCSS())
+		.pipe(rename('main.min.css'))
+		.pipe(gulp.dest('./public/styles'));
 });
 
-// configure task to replace css/js and minmify html
+// configure task to replace css/js and minimify html
 gulp.task('html', function() {
 	var opts = {
 		conditionals: true,
 		spare:true
 	};
+
 	gulp.src('./app/index.html')
-		.pipe(htmlreplace({
-			'css': './styles/main.css',
+		.pipe(htmlReplace({
+			'css': './styles/main.min.css',
 			'js': './scripts/app.min.js'
 		}))
 		.pipe(minifyHTML(opts))
 		.pipe(gulp.dest('./public/'));
 });
 
-// configure minify html task
-gulp.task('minify-html', function() {
-
-	gulp.src('./app/index.html')
-		.pipe(minifyHTML(opts))
-		.pipe(gulp.dest('./public/'));
-});
-
-// configure which files to watch and what tasks to use on file changes
+// configure which files to watch and tasks to use on file changes
 gulp.task('watch', function() {
-	// gulp.watch(['./app.js', './api/index.js', './app/scripts/*.js'],['jshint', 'javascript']);
-	gulp.watch(['./app/scripts/*.js'],['javascript']);
+	gulp.watch('./app/scripts/*.js',['javascript', 'test']);
 	gulp.watch('./app/styles/*.less', ['less']);
 	gulp.watch('./app/index.html', ['html']);
 });
 
 // define the build task
-gulp.task('build', ['javascript', 'less', 'html']);
+gulp.task('build', ['javascript', 'test', 'less', 'html']);
 
-// define the dev task and add the watch task to it
+// define the dev task
 gulp.task('dev', ['build', 'watch']);

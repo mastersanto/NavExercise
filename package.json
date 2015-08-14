@@ -3,6 +3,7 @@
   "description": "Exercise for candidates to complete where they will build a responsive nav driven from json",
   "version": "0.1.0",
   "authors": [
+    "Jorge Sandoval <jorgeivansandoval@gmail.com",
     "Jason Divock <jdivock@hugeinc.com>",
     "Dave Furfero <dfurfero@hugeinc.com>",
     "Wes Hatch <whatch@hugeinc.com>",
@@ -25,25 +26,23 @@
     "normalize.less": "^1.0.0"
   },
   "devDependencies": {
-    "debug": "^2.2.0",
     "gulp": "^3.9.0",
     "gulp-combine-media-queries": "^0.2.0",
-    "gulp-compass": "^2.1.0",
-    "gulp-concat": "^2.6.0",
-    "gulp-exec": "^2.1.1",
     "gulp-html-replace": "^1.5.1",
+    "gulp-jasmine": "^2.0.1",
     "gulp-jshint": "^1.11.2",
     "gulp-less": "^3.0.3",
-    "gulp-livereload": "^3.8.0",
-    "gulp-load-plugins": "^1.0.0-rc.1",
     "gulp-minify-css": "^1.2.0",
     "gulp-minify-html": "^1.0.4",
-    "gulp-order": "^1.1.1",
-    "gulp-plumber": "^1.0.1",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^1.2.0",
     "gulp-watch-less": "^1.0.1",
+    "jasmine-core": "^2.3.4",
     "jshint-stylish": "^2.0.1",
-    "less": "^2.5.1"
+    "karma": "^0.13.9",
+    "karma-jasmine": "^0.3.6",
+    "karma-phantomjs-launcher": "^0.2.1",
+    "less": "^2.5.1",
+    "phantomjs": "^1.9.18"
   }
 }

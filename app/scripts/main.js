@@ -141,8 +141,7 @@
 				}
 
 				event.preventDefault();
-			}
-		, false);
+			}, false);
 
 		// Add event listener for click/touch on the mask
 		this.$mask.addEventListener(this.supportedEvent, function (event) {

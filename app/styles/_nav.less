@@ -32,11 +32,28 @@
 		vertical-align: top;
 	}
 
+	@media @medium {
+		> li {
+			&:last-child {
+				.submenu {
+					left: auto;
+					right: 0;
+				}
+			}
+		}
+	}
+
 	@media @small {
 		padding: @half-gutter 0;
 
 		> li {
 			display: block;
+
+			&:last-child {
+				.submenu {
+					right: auto;
+				}
+			}
 		}
 	}
 }
